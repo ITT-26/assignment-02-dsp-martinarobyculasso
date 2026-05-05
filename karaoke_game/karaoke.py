@@ -27,6 +27,7 @@ low_freq = 30       # Hz
 high_freq = 3400    # Hz
 
 # PYGLET ------
+
 WINDOW_WIDTH = 800
 WINDOW_HEIGHT = 500
 
@@ -34,6 +35,7 @@ SCROLL_SPEED = 250  # pixels per second
 
 PLAYER_X = 100  # fixed x position for player
 
+# colors
 GREEN = (72, 169, 166)
 RED = (193, 102, 107)
 WHITE = (228, 223, 218)
@@ -43,7 +45,7 @@ BACKGROUND = (67, 87, 173)
 # calculate how long it takes for a note to travel from the right edge to the player's position
 time_to_travel = (WINDOW_WIDTH - PLAYER_X) / SCROLL_SPEED
 
-game_state = "start_screen" # "start_screen", "singing", "results_screen"
+game_state = "start_screen" # "start_screen", "playing", "results_screen"
 selected_song = None
 game_time = 0.0        # elapsed time since song started
 parsed_notes = []      # list of (start_time, duration, frequency) from parse_midi_file
@@ -55,6 +57,8 @@ song_freq_max = high_freq
 score = 0
 total_frames = 0
 accuracy = 0.0
+
+freq_history = []
 
 # path for assets (background, game objects, sprite)
 assets_dir = os.path.join(os.path.dirname(__file__), 'assets')
@@ -207,6 +211,8 @@ def butter_bandpass(lowcut, highcut, fs, order=5):
 
 # audio callback - called automatically by sounddevice
 def audio_callback(indata, frames, time, status):
+    global game_state, freq_history
+
     if status:
         print(status)
 
@@ -230,14 +236,23 @@ def audio_callback(indata, frames, time, status):
     # find the magnitude at each frequency
     abs_data_fft = np.abs(data_fft)
 
-
     # find the index that corresponds to the highest value
     i = np.argmax(abs_data_fft)
+
     # find the dominant frequency using the previously calculated index
     freq_max = freq[i]
 
-    # compare the detected frequency with the current note from the MIDI file
-    penguin_sprite.y = freq_to_y(freq_max, WINDOW_HEIGHT)
+    # penguin_sprite.y = freq_to_y(freq_max, WINDOW_HEIGHT)
+    # penguin_sprite.y = max(0, min(WINDOW_HEIGHT, penguin_sprite.y))
+
+    # smooth the frequency using a rolling average
+    freq_history.append(freq_max)
+    if len(freq_history) > 5:
+        freq_history.pop(0)
+    smoothed_freq = np.mean(freq_history)
+
+    # update penguin position based on smoothed frequency
+    penguin_sprite.y = freq_to_y(smoothed_freq, WINDOW_HEIGHT)
     penguin_sprite.y = max(0, min(WINDOW_HEIGHT, penguin_sprite.y))
 
 # == CLASSES ==
@@ -270,21 +285,22 @@ hamming_window = np.hamming(CHUNK_SIZE)
 
 # == MAIN PROGRAM ==
 
+tracks_dir = os.path.join(os.path.dirname(__file__), 'tracks')
+
 if len(sys.argv) < 2:
-    print("\nUsage: python karaoke.py <song.mid>")
+    print("\nUsage: python karaoke.py <song>")
     print("\nAvailable songs:")
-    # list all .mid files in the current directory
-    mid_files = [f for f in os.listdir('.') if f.endswith('.mid')]
+    mid_files = [f for f in os.listdir(tracks_dir) if f.endswith('.mid')]
     for song in mid_files:
         print(f"  - {song}")
     print("\n")
     sys.exit(1)
 
-selected_song = sys.argv[1]
+selected_song = os.path.join(tracks_dir, sys.argv[1]) 
 
-song_label.text = 'Selected song: ' + selected_song
+song_label.text = 'Selected song: ' + os.path.basename(selected_song)
 
-preview_source = pyglet.media.load(selected_song.replace('.mid', '.mp3'))
+preview_source = pyglet.media.load(os.path.join(tracks_dir, selected_song.replace('.mid', '.mp3')))
 preview_player = pyglet.media.Player()
 
 # parse the song immediately at startup
@@ -364,6 +380,8 @@ def on_key_press(key, modifiers):
             next_note_index = 0
             active_notes = []
             accuracy_label.text = ''
+            penguin_sprite.y = WINDOW_HEIGHT // 2
+            freq_history.clear()
             game_state = "start_screen"
             
 @win.event

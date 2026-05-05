@@ -1,0 +1,63 @@
+FILES IN 'karaoke_game'
+=======================
+
+Main file (Exercise 1): karaoke.py
+------------------------------------
+Karaoke game that captures audio from the microphone, detects the dominant
+frequency in real time using FFT, and compares it to notes from a MIDI file.
+The game displays scrolling note blocks in a Guitar Hero-style interface built
+with pyglet. The player's pitch is represented by a penguin sprite that moves
+vertically based on detected frequency.
+
+HOW TO RUN
+-----------
+    python karaoke.py <song.mid>
+
+Songs must be placed in the 'tracks/' folder. The program will list available
+songs if no argument is provided:
+
+    python karaoke.py
+
+CONTROLS
+---------
+    Start screen:
+        SPACE       — start the game
+        P           — play a preview of the selected song (MP3)
+
+    Results screen:
+        R           — play again
+        Q / ESC     — quit
+
+TRACKS FOLDER
+--------------
+Each song requires two files in the 'tracks/' folder:
+    - <songname>.mid    MIDI file used for note detection and game logic
+    - <songname>.mp3    MP3 file used for the song preview
+
+NOTES
+------
+- The game uses a Butterworth bandpass filter and Hamming window to improve
+  frequency detection accuracy before computing the FFT.
+- Frequency-to-screen mapping uses a logarithmic scale to reflect how humans
+  perceive pitch.
+- The scroll speed and collision tolerance can be adjusted via the SCROLL_SPEED
+  and detect_collision() tolerance constants in karaoke.py.
+
+AI USAGE (Claude — Anthropic)
+-------------------------------
+Claude was used for guided learning and code assistance throughout development.
+Specific areas where Claude provided help:
+
+- MP3 song playback: suggested using pyglet.media for loading and playing
+  MP3 files as song previews.
+- MIDI information: provided sources (mido documentation, MIDI Tuning Standard
+  Wikipedia article) to understand MIDI message format and note-to-frequency
+  conversion.
+- Mapping frequency to screen position: explained logarithmic frequency mapping
+  and helped implement the freq_to_y() function.
+- Time-to-travel formula: suggested the formula (WINDOW_WIDTH - PLAYER_X) /
+  SCROLL_SPEED to correctly time note block spawning so blocks arrive at the
+  player line at the right musical moment.
+- Frequency smoothing: suggested a rolling average (freq_history) to reduce
+  jumpiness in the penguin sprite's movement.
+- Helped write this info.txt file.
