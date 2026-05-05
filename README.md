@@ -1,6 +1,8 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/B3oR_XLF)
 
-# Whistle Input
+# Digital Signal Processing
+
+---
 
 Assignment 2 for the Interactive Techniques and Technologies course (ITT), Universität Regensburg.
 
@@ -15,6 +17,9 @@ A karaoke game built with pyglet that captures microphone input, detects the dom
 a) A pyglet app displaying a stack of rectangles, one of which is visually selected. Whistling upwards moves the selection up, whistling downwards moves it down. Chirp direction is detected by analyzing the frequency trend of the whistle using FFT.
 
 b) A headless script that detects upward and downward whistle chirps and triggers system-wide arrow key presses using pynput, allowing navigation of arbitrary GUI menus by whistling.
+
+---
+Each folder contains an `info.txt` file with a description of the files and relevant notes.
 
 ---
 
