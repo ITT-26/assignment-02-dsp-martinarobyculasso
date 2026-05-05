@@ -1,8 +1,5 @@
 import sounddevice as sd
 import numpy as np
-import time as t
-import threading
-import mido
 from mido import MidiFile
 import pyglet
 from pyglet import window, shapes
@@ -60,7 +57,7 @@ accuracy = 0.0
 
 freq_history = []
 
-# path for assets (background, game objects, sprite)
+# path for assets 
 assets_dir = os.path.join(os.path.dirname(__file__), 'assets')
 pyglet.resource.path = [assets_dir]
 pyglet.resource.reindex()
