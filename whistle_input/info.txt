@@ -38,6 +38,9 @@ AI USAGE (Claude — Anthropic)
 Claude was used for guided learning and code assistance throughout development.
 Specific areas where Claude provided help:
 
+- Thread safety: explained why UI updates should not be called directly from the
+  audio callback thread, and suggested using boolean flags (up_detected,
+  down_detected) polled from pyglet's update loop instead.
 - pynput usage: helped understand how to trigger programmatic key presses using
   pynput.keyboard.Controller.
 - Helped write this info.txt file.
