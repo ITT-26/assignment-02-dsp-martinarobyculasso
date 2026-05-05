@@ -9,18 +9,18 @@ CHUNK_SIZE = 1024 # Number of audio frames per buffer
 RATE = 44100 # Audio sampling rate (HZ)
 CHANNELS = 1 # Mono audio
 
-# print info about audio devices
-print("Available input devices:\n")
-devices = sd.query_devices()
+# # print info about audio devices
+# print("Available input devices:\n")
+# devices = sd.query_devices()
 
-input_devices = []
-for i, dev in enumerate(devices):
-    if dev['max_input_channels'] > 0:
-        print(f"{i}: {dev['name']}")
-        input_devices.append(i)
+# input_devices = []
+# for i, dev in enumerate(devices):
+#     if dev['max_input_channels'] > 0:
+#         print(f"{i}: {dev['name']}")
+#         input_devices.append(i)
 
-# let user select audio device
-input_device = int(input("\nSelect input device: "))
+# # let user select audio device
+# input_device = int(input("\nSelect input device: "))
 
 
 # set up interactive plot
@@ -46,7 +46,7 @@ def audio_callback(indata, frames, time, status):
 
 # open audio input stream
 stream = sd.InputStream(
-    device=input_device,
+    #device=input_device,
     channels=CHANNELS,
     samplerate=RATE,
     blocksize=CHUNK_SIZE,
