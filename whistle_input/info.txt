@@ -1,19 +1,43 @@
-## Exercise 2 — Whistle Input
- 
-### Files
- 
-- `audio_sample.py` — helper script to visualize live audio input using pyqtgraph
-- `whistle-input-pyglet.py` — pyglet app with a stack of selectable rectangles navigated by whistling up or down
-- `whistle-input-pynput.py` — headless script that detects whistle chirps and fires real arrow key presses system-wide using pynput
- 
-### Assets
- 
-- `assets/` — contains the Fredoka font used in the pyglet interface
- 
-### How it works
- 
-Audio is captured from the microphone using sounddevice. Each chunk is bandpass filtered (800–2500 Hz) to isolate whistling frequencies, then a Hamming window is applied before computing the FFT to find the dominant frequency. Silences are used as natural boundaries between chirps. When a whistle ends, the collected frequency window is split in half and the means are compared — a rising trend triggers an upward action, a falling trend triggers a downward action.
- 
-### AI Usage
- 
-AI was used to help understand how to use the pynput library to trigger key presses programmatically.
+FILES IN 'whistle_input'
+========================
+
+Main files (Exercise 2):
+    whistle-input-pyglet.py     (Part a)
+    whistle-input-pynput.py     (Part b)
+-----------------------------------------
+Part a: Pyglet app displaying a vertical stack of rectangles, one of which is
+visually selected. Whistling upwards moves the selection up, whistling downwards
+moves it down. A brief text label provides visual feedback on detection.
+
+Part b: Headless script (no window) that detects upward and downward whistle
+chirps and fires real system-wide arrow key presses using pynput, allowing
+navigation of arbitrary GUI menus by whistling.
+
+Helper file: audio_sample.py
+------------------------------
+Utility script for visualizing live microphone input as a waveform using
+pyqtgraph. Used during development to inspect the audio signal.
+
+HOW TO RUN
+-----------
+Part a (pyglet interface):
+    python whistle-input-pyglet.py
+
+Part b (system-wide pynput):
+    python whistle-input-pynput.py
+
+For Part b, run the script in the background, then switch focus to any GUI
+application and whistle to navigate it.
+
+CONTROLS
+---------
+    Q / ESC     — quit (pyglet version only)
+
+AI USAGE (Claude — Anthropic)
+-------------------------------
+Claude was used for guided learning and code assistance throughout development.
+Specific areas where Claude provided help:
+
+- pynput usage: helped understand how to trigger programmatic key presses using
+  pynput.keyboard.Controller.
+- Helped write this info.txt file.
