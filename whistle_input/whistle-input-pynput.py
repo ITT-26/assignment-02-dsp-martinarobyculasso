@@ -22,8 +22,8 @@ high_freq = 2500    # Hz
 was_whistling = False
 freq_window = []  
 
-MIN_SAMPLES = 12
-MIN_DIFF = 110
+MIN_SAMPLES = 10
+MIN_DIFF = 115
 
 # FUNCTIONS ==
 

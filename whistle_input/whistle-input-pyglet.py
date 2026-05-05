@@ -45,7 +45,7 @@ visual_feedback = pyglet.text.Label(
 CHUNK_SIZE = 1024           # number of audio frames per buffer
 RATE = 44100                # audio sampling rate (HZ)
 CHANNELS = 1                # mono audio
-VOLUME_THRESHOLD = 0.1     # minimum volume to consider as whistling
+VOLUME_THRESHOLD = 0.15     # minimum volume to consider as whistling
 
 # whistling frequency range - tested with a real whistle
 low_freq = 800      # Hz
@@ -57,8 +57,8 @@ up_detected = False
 down_detected = False
 feedback_timer = 0
 
-MIN_SAMPLES = 12
-MIN_DIFF = 110
+MIN_SAMPLES = 10
+MIN_DIFF = 115
 
 # FUNCTIONS ==
 
@@ -123,13 +123,13 @@ def audio_callback(indata, frames, time, status):
         was_whistling = True
     else:
         if was_whistling:
-            #print(f"Whistle ended! Samples collected: {len(freq_window)}")
+            print(f"Whistle ended! Samples collected: {len(freq_window)}")
             if len(freq_window) >= MIN_SAMPLES:
                 half = len(freq_window) // 2
                 first_half = np.mean(freq_window[:half])
                 second_half = np.mean(freq_window[half:])
                 diff = second_half - first_half
-                # print(f"first_half mean: {first_half:.1f}, second_half mean: {second_half:.1f}, diff: {diff:.1f}")
+                print(f"first_half mean: {first_half:.1f}, second_half mean: {second_half:.1f}, diff: {diff:.1f}")
                 if diff > MIN_DIFF:
                     move_up()
                 elif diff < -MIN_DIFF:
@@ -164,7 +164,7 @@ def update(dt):
     global up_detected, down_detected, feedback_timer
     if up_detected:
         visual_feedback.text = "Up!"
-        feedback_timer = 0.5  # show for 0.5 second
+        feedback_timer = 0.5  # show for 0.5 seconds
         up_detected = False
     elif down_detected:
         visual_feedback.text = "Down!"
