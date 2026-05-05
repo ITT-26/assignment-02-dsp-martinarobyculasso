@@ -37,4 +37,5 @@
 
 ### Code
 - [pyglet documentation](https://pyglet.org) used as reference for game loop, sprites, window, and text rendering.
-- Claude (Anthropic) used for guided learning and code assistance. See info.txt for details.
+- [pynput documentation](https://pynput.readthedocs.io/en/latest/) — used to understand how to trigger programmatic key presses from Python.
+- Claude (Anthropic) used for guided learning and code assistance. See info.txt in each ex. folder for details.

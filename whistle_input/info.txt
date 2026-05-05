@@ -1,0 +1,19 @@
+## Exercise 2 — Whistle Input
+ 
+### Files
+ 
+- `audio_sample.py` — helper script to visualize live audio input using pyqtgraph
+- `whistle-input-pyglet.py` — pyglet app with a stack of selectable rectangles navigated by whistling up or down
+- `whistle-input-pynput.py` — headless script that detects whistle chirps and fires real arrow key presses system-wide using pynput
+ 
+### Assets
+ 
+- `assets/` — contains the Fredoka font used in the pyglet interface
+ 
+### How it works
+ 
+Audio is captured from the microphone using sounddevice. Each chunk is bandpass filtered (800–2500 Hz) to isolate whistling frequencies, then a Hamming window is applied before computing the FFT to find the dominant frequency. Silences are used as natural boundaries between chirps. When a whistle ends, the collected frequency window is split in half and the means are compared — a rising trend triggers an upward action, a falling trend triggers a downward action.
+ 
+### AI Usage
+ 
+AI was used to help understand how to use the pynput library to trigger key presses programmatically.
