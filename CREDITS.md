@@ -36,6 +36,35 @@
 - Used for: Butterworth bandpass filter (`scipy.signal.butter`, `scipy.signal.lfilter`)
 
 ### Code
+- Code structure for audio capture and FFT-based frequency detection based on sample code provided by the Interactive Techniques and Technologies course (ITT), Universität Regensburg.
 - [pyglet documentation](https://pyglet.org) used as reference for game loop, sprites, window, and text rendering.
-- [pynput documentation](https://pynput.readthedocs.io/en/latest/) — used to understand how to trigger programmatic key presses from Python.
-- Claude (Anthropic) used for guided learning and code assistance. See info.txt in each ex. folder for details.
+- Claude (Anthropic) used for guided learning and code assistance. See info.txt for details.
+
+---
+
+## Whistle Input (Ex. 2)
+
+### Assets
+
+**[Fredoka - Google Fonts](https://fonts.google.com/specimen/Fredoka)**
+- Used for: UI font
+- License: SIL Open Font License 1.1 (OFL)
+
+**[Coolors](https://coolors.co/4357ad-48a9a6-e4dfda-d4b483-c1666b)**
+- Used for: color palette selection
+
+### References
+
+**[NumPy Documentation](https://numpy.org/doc/stable/)**
+- Used for: FFT computation (`np.fft.rfft`, `np.fft.rfftfreq`), array operations, Hamming window
+
+**[SciPy Signal Documentation](https://docs.scipy.org/doc/scipy/reference/signal.html)**
+- Used for: Butterworth bandpass filter (`scipy.signal.butter`, `scipy.signal.lfilter`)
+
+**[pynput Documentation](https://pynput.readthedocs.io/en/latest/)**
+- Used for: triggering programmatic arrow key presses system-wide
+
+### Code
+- Code structure for audio capture and FFT-based frequency detection based on sample code provided by the Interactive Techniques and Technologies course (ITT), Universität Regensburg.
+- [pyglet documentation](https://pyglet.org) used as reference for window, shapes, and text rendering.
+- Claude (Anthropic) used for guided learning and code assistance. See info.txt for details.
