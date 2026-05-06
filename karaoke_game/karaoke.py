@@ -238,13 +238,14 @@ def audio_callback(indata, frames, time, status):
 
     # find the dominant frequency using the previously calculated index
     freq_max = freq[i]
+    #print(f"Detected frequency: {freq_max:.2f} Hz")
 
     # penguin_sprite.y = freq_to_y(freq_max, WINDOW_HEIGHT)
     # penguin_sprite.y = max(0, min(WINDOW_HEIGHT, penguin_sprite.y))
 
     # smooth the frequency using a rolling average
     freq_history.append(freq_max)
-    if len(freq_history) > 5:
+    if len(freq_history) > 10:
         freq_history.pop(0)
     smoothed_freq = np.mean(freq_history)
 
